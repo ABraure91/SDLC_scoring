@@ -1,0 +1,9 @@
+tool_name,Business understanding,Data acquisition,Data preparation,Modeling,Validation,Deployment,Monitoring
+ChatGPT,4,3,3,5,4,3,3
+Copilot,2,1,2,4,3,3,2
+CustomModelX,5,4,4,5,5,4,4
+LangChain,3,4,4,4,3,3,3
+DatabricksIQ,3,5,5,4,4,4,4
+VertexAI,2,4,4,4,4,5,5
+GitHubActionsAI,1,1,1,2,2,5,4
+ObservabilityBot,1,2,2,2,3,3,5
