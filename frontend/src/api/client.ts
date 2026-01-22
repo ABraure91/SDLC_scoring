@@ -1,4 +1,4 @@
-import type { ApiErrorPayload, UploadResponse } from '../types'
+import type { ApiErrorPayload, GraphResponse, SDLCGraph, UploadResponse } from '../types'
 
 export class ApiError extends Error {
   public code?: string
@@ -47,4 +47,28 @@ export async function fetchSample(): Promise<UploadResponse> {
     throw await parseError(res)
   }
   return (await res.json()) as UploadResponse
+}
+
+export async function uploadGraph(file: File): Promise<GraphResponse> {
+  const form = new FormData()
+  form.append('file', file)
+
+  const res = await fetch('/api/upload-graph', {
+    method: 'POST',
+    body: form
+  })
+
+  if (!res.ok) {
+    throw await parseError(res)
+  }
+
+  return (await res.json()) as GraphResponse
+}
+
+export async function fetchSampleGraph(): Promise<GraphResponse> {
+  const res = await fetch('/api/sample-graph')
+  if (!res.ok) {
+    throw await parseError(res)
+  }
+  return (await res.json()) as GraphResponse
 }

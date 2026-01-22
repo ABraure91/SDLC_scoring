@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import Header from './components/Header'
 import FileUpload from './components/FileUpload'
+import GraphUpload from './components/GraphUpload'
+import GraphVisualization from './components/GraphVisualization'
 import LoadingSpinner from './components/LoadingSpinner'
 import ErrorCallout from './components/ErrorCallout'
 import DataPreviewTable from './components/DataPreviewTable'
@@ -8,8 +10,8 @@ import FiltersPanel from './components/FiltersPanel'
 import HeatmapView from './components/HeatmapView'
 import RadarView from './components/RadarView'
 import Tabs, { type TabKey } from './components/Tabs'
-import { ApiError, fetchSample, uploadCsv } from './api/client'
-import type { FiltersState, UploadResponse } from './types'
+import { ApiError, fetchSample, fetchSampleGraph, uploadCsv, uploadGraph } from './api/client'
+import type { FiltersState, GraphResponse, SDLCGraph, UploadResponse } from './types'
 
 function buildInitialFilters(data: UploadResponse): FiltersState {
   return {
@@ -27,10 +29,14 @@ export default function App() {
 
   const [data, setData] = useState<UploadResponse | null>(null)
   const [filters, setFilters] = useState<FiltersState | null>(null)
+  const [graph, setGraph] = useState<SDLCGraph | null>(null)
+  const [graphWarnings, setGraphWarnings] = useState<string[]>([])
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [warnings, setWarnings] = useState<string[]>([])
+  const [graphError, setGraphError] = useState<string | null>(null)
+  const [isLoadingGraph, setIsLoadingGraph] = useState(false)
 
   const canRender = Boolean(data && filters)
 
@@ -62,6 +68,27 @@ export default function App() {
     void load(() => fetchSample())
   }
 
+  const loadGraph = async (fn: () => Promise<GraphResponse>) => {
+    setIsLoadingGraph(true)
+    setGraphError(null)
+    setGraphWarnings([])
+    try {
+      const res = await fn()
+      setGraph(res.graph)
+      setGraphWarnings(res.warnings || [])
+    } catch (e) {
+      const msg = e instanceof ApiError ? e.message : 'Erreur inattendue'
+      setGraphError(msg)
+      setGraph(null)
+    } finally {
+      setIsLoadingGraph(false)
+    }
+  }
+
+  const onGraphFileSelected = (file: File) => {
+    void loadGraph(() => uploadGraph(file))
+  }
+
   const metaLine = useMemo(() => {
     if (!data) return null
     return `Délimiteur: "${data.meta.delimiter}" • Encodage: ${data.meta.encoding} • Lignes: ${data.meta.row_count} • Étapes: ${data.meta.step_count}`
@@ -74,6 +101,32 @@ export default function App() {
       <main className="mx-auto max-w-7xl px-6 py-8">
         <div className="flex flex-col gap-6">
           <FileUpload disabled={isLoading} onFileSelected={onFileSelected} onLoadSample={onLoadSample} />
+
+          <GraphUpload disabled={isLoadingGraph || isLoading} onFileSelected={onGraphFileSelected} />
+
+          {isLoadingGraph ? <LoadingSpinner label="Chargement du graph SDLC…" /> : null}
+
+          {graphError ? (
+            <ErrorCallout
+              message={`Erreur lors du chargement du graph: ${graphError}\n\nConseil: vérifiez que le fichier JSON contient bien les champs "nodes" et "edges".`}
+            />
+          ) : null}
+
+          {graph ? (
+            <>
+              {graphWarnings.length > 0 ? (
+                <div className="rounded-lg border border-axa-border bg-axa-surface px-4 py-3 text-xs text-axa-muted">
+                  <div className="font-semibold text-axa-ink">Avertissements (graph)</div>
+                  <ul className="mt-2 list-disc space-y-1 pl-5">
+                    {graphWarnings.map((w, i) => (
+                      <li key={i}>{w}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+              <GraphVisualization graph={graph} />
+            </>
+          ) : null}
 
           {isLoading ? <LoadingSpinner label="Analyse du CSV et préparation des visualisations…" /> : null}
 
