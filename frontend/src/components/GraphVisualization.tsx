@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import ReactFlow, {
   Background,
   Controls,
@@ -7,13 +7,17 @@ import ReactFlow, {
   Edge,
   MarkerType,
   Position,
+  ReactFlowInstance,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
+import clsx from 'clsx'
 import type { SDLCGraph } from '../types'
 
 interface GraphVisualizationProps {
   graph: SDLCGraph
 }
+
+type LevelFilter = 'all' | 0 | 1 | 2
 
 // Couleurs pour les différents niveaux
 const LEVEL_COLORS: Record<number, string> = {
@@ -29,6 +33,9 @@ const EDGE_COLORS: Record<string, string> = {
 }
 
 export default function GraphVisualization({ graph }: GraphVisualizationProps) {
+  const [levelFilter, setLevelFilter] = useState<LevelFilter>('all')
+  const reactFlowInstance = useRef<ReactFlowInstance | null>(null)
+
   const { nodes: flowNodes, edges: flowEdges } = useMemo(() => {
     // Créer un layout hiérarchique basé sur les niveaux
     const nodesByLevel = new Map<number, typeof graph.nodes>()
@@ -97,53 +104,140 @@ export default function GraphVisualization({ graph }: GraphVisualizationProps) {
       })
     }
 
-    // Créer les edges
-    const edges: Edge[] = graph.edges.map((edge) => {
-      const edgeColor = EDGE_COLORS[edge.edge_type] || '#6b7280'
-      const edgeStyle = edge.edge_type === 'sequence' ? 'solid' : 'dashed'
+    // Filtrer les nœuds selon le niveau sélectionné
+    let filteredNodes: Node[] = Array.from(nodeMap.values())
+    if (levelFilter !== 'all') {
+      filteredNodes = filteredNodes.filter((node) => {
+        const nodeData = graph.nodes.find((n) => n.id === node.id)
+        return nodeData?.level === levelFilter
+      })
+    }
 
-      return {
-        id: `${edge.src}-${edge.dst}`,
-        source: edge.src,
-        target: edge.dst,
-        type: 'smoothstep',
-        animated: edge.edge_type === 'sequence',
-        style: {
-          stroke: edgeColor,
-          strokeWidth: edge.edge_type === 'sequence' ? 3 : 2,
-          strokeDasharray: edgeStyle === 'dashed' ? '5,5' : undefined,
-        },
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          color: edgeColor,
-        },
-        label: edge.params?.soft_gating_strength
-          ? `${edge.params.soft_gating_strength.toFixed(2)}`
-          : undefined,
-        labelStyle: {
-          fill: edgeColor,
-          fontWeight: 'bold',
-          fontSize: '10px',
-        },
-        labelBgStyle: {
-          fill: '#ffffff',
-          fillOpacity: 0.8,
-        },
-      }
-    })
+    // Créer un Set des IDs de nœuds visibles pour filtrer les edges
+    const visibleNodeIds = new Set(filteredNodes.map((n) => n.id))
+
+    // Créer les edges, en ne gardant que ceux dont les deux nœuds sont visibles
+    const edges: Edge[] = graph.edges
+      .filter((edge) => visibleNodeIds.has(edge.src) && visibleNodeIds.has(edge.dst))
+      .map((edge) => {
+        const edgeColor = EDGE_COLORS[edge.edge_type] || '#6b7280'
+        const edgeStyle = edge.edge_type === 'sequence' ? 'solid' : 'dashed'
+
+        return {
+          id: `${edge.src}-${edge.dst}`,
+          source: edge.src,
+          target: edge.dst,
+          type: 'smoothstep',
+          animated: edge.edge_type === 'sequence',
+          style: {
+            stroke: edgeColor,
+            strokeWidth: edge.edge_type === 'sequence' ? 3 : 2,
+            strokeDasharray: edgeStyle === 'dashed' ? '5,5' : undefined,
+          },
+          markerEnd: {
+            type: MarkerType.ArrowClosed,
+            color: edgeColor,
+          },
+          label: edge.params?.soft_gating_strength
+            ? `${edge.params.soft_gating_strength.toFixed(2)}`
+            : undefined,
+          labelStyle: {
+            fill: edgeColor,
+            fontWeight: 'bold',
+            fontSize: '10px',
+          },
+          labelBgStyle: {
+            fill: '#ffffff',
+            fillOpacity: 0.8,
+          },
+        }
+      })
 
     return {
-      nodes: Array.from(nodeMap.values()),
+      nodes: filteredNodes,
       edges,
     }
-  }, [graph])
+  }, [graph, levelFilter])
+
+  // Ajuster la vue quand le filtre change
+  useEffect(() => {
+    if (reactFlowInstance.current) {
+      setTimeout(() => {
+        reactFlowInstance.current?.fitView({ padding: 0.2, duration: 300 })
+      }, 100)
+    }
+  }, [levelFilter, flowNodes.length])
+
+  // Compter les nœuds visibles et les edges visibles
+  const visibleNodeCount = flowNodes.length
+  const visibleEdgeCount = flowEdges.length
 
   return (
     <div className="rounded-xl border border-axa-border bg-white p-4 shadow-soft">
       <div className="mb-4">
-        <div className="text-base font-semibold text-axa-ink">Visualisation du graph SDLC</div>
-        <div className="mt-1 text-sm text-axa-muted">
-          {graph.nodes.length} nœuds • {graph.edges.length} relations
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div>
+            <div className="text-base font-semibold text-axa-ink">Visualisation du graph SDLC</div>
+            <div className="mt-1 text-sm text-axa-muted">
+              {visibleNodeCount} nœud{visibleNodeCount > 1 ? 's' : ''} • {visibleEdgeCount} relation{visibleEdgeCount > 1 ? 's' : ''}
+              {levelFilter !== 'all' && (
+                <span className="ml-2">
+                  (filtre: Lv {levelFilter})
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => setLevelFilter('all')}
+              className={clsx(
+                'rounded-md px-3 py-1.5 text-sm font-medium transition',
+                levelFilter === 'all'
+                  ? 'bg-axa-blue text-white'
+                  : 'bg-axa-surface text-axa-ink hover:bg-axa-lightblue/50'
+              )}
+            >
+              Tous
+            </button>
+            <button
+              type="button"
+              onClick={() => setLevelFilter(0)}
+              className={clsx(
+                'rounded-md px-3 py-1.5 text-sm font-medium transition',
+                levelFilter === 0
+                  ? 'bg-axa-blue text-white'
+                  : 'bg-axa-surface text-axa-ink hover:bg-axa-lightblue/50'
+              )}
+            >
+              Lv 0
+            </button>
+            <button
+              type="button"
+              onClick={() => setLevelFilter(1)}
+              className={clsx(
+                'rounded-md px-3 py-1.5 text-sm font-medium transition',
+                levelFilter === 1
+                  ? 'bg-axa-blue text-white'
+                  : 'bg-axa-surface text-axa-ink hover:bg-axa-lightblue/50'
+              )}
+            >
+              Lv 1
+            </button>
+            <button
+              type="button"
+              onClick={() => setLevelFilter(2)}
+              className={clsx(
+                'rounded-md px-3 py-1.5 text-sm font-medium transition',
+                levelFilter === 2
+                  ? 'bg-axa-blue text-white'
+                  : 'bg-axa-surface text-axa-ink hover:bg-axa-lightblue/50'
+              )}
+            >
+              Lv 2
+            </button>
+          </div>
         </div>
       </div>
 
@@ -151,6 +245,10 @@ export default function GraphVisualization({ graph }: GraphVisualizationProps) {
         <ReactFlow
           nodes={flowNodes}
           edges={flowEdges}
+          onInit={(instance) => {
+            reactFlowInstance.current = instance
+            instance.fitView({ padding: 0.2 })
+          }}
           fitView
           fitViewOptions={{ padding: 0.2 }}
         >
