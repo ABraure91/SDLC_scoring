@@ -12,6 +12,7 @@ import RadarView from './components/RadarView'
 import Tabs, { type TabKey } from './components/Tabs'
 import { ApiError, fetchSample, fetchSampleGraph, uploadCsv, uploadGraph } from './api/client'
 import type { FiltersState, GraphResponse, SDLCGraph, UploadResponse } from './types'
+import { type LevelFilter } from './utils/graphUtils'
 
 function buildInitialFilters(data: UploadResponse): FiltersState {
   return {
@@ -31,6 +32,7 @@ export default function App() {
   const [filters, setFilters] = useState<FiltersState | null>(null)
   const [graph, setGraph] = useState<SDLCGraph | null>(null)
   const [graphWarnings, setGraphWarnings] = useState<string[]>([])
+  const [levelFilter, setLevelFilter] = useState<LevelFilter>('all')
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -187,6 +189,9 @@ export default function App() {
                   minScore={data!.minScore}
                   maxScore={data!.maxScore}
                   filters={filters!}
+                  graph={graph}
+                  levelFilter={levelFilter}
+                  onLevelFilterChange={setLevelFilter}
                 />
               ) : null}
 
@@ -198,6 +203,9 @@ export default function App() {
                   minScore={data!.minScore}
                   maxScore={data!.maxScore}
                   filters={filters!}
+                  graph={graph}
+                  levelFilter={levelFilter}
+                  onLevelFilterChange={setLevelFilter}
                 />
               ) : null}
 
