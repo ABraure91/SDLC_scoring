@@ -1,0 +1,583 @@
+{
+  "nodes": [
+    {
+      "id": "PD",
+      "label": "Planning & Design",
+      "level": 0,
+      "node_type": "composite",
+      "tags": [
+        "planning"
+      ]
+    },
+    {
+      "id": "CB",
+      "label": "Code & Build",
+      "level": 0,
+      "node_type": "composite",
+      "tags": [
+        "coding"
+      ]
+    },
+    {
+      "id": "TI",
+      "label": "Test & Integrate",
+      "level": 0,
+      "node_type": "composite",
+      "tags": [
+        "testing"
+      ]
+    },
+    {
+      "id": "DE",
+      "label": "Deploy & Release",
+      "level": 0,
+      "node_type": "composite",
+      "tags": [
+        "deploy"
+      ]
+    },
+    {
+      "id": "MO",
+      "label": "Monitor & Operate",
+      "level": 0,
+      "node_type": "composite",
+      "tags": [
+        "monitoring"
+      ]
+    },
+    {
+      "id": "PD.1",
+      "label": "Requirements & Scoping",
+      "level": 1,
+      "node_type": "composite",
+      "tags": [
+        "planning"
+      ]
+    },
+    {
+      "id": "PD.2",
+      "label": "Architecture & Security Design",
+      "level": 1,
+      "node_type": "composite",
+      "tags": [
+        "planning",
+        "security"
+      ]
+    },
+    {
+      "id": "PD.3",
+      "label": "Project Management & Collaboration",
+      "level": 1,
+      "node_type": "leaf",
+      "tags": [
+        "planning"
+      ],
+      "base_prob": 0.75
+    },
+    {
+      "id": "PD.1.1",
+      "label": "Stakeholder Alignment",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "planning"
+      ],
+      "base_prob": 0.72
+    },
+    {
+      "id": "PD.1.2",
+      "label": "User Stories & Acceptance Criteria",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "planning"
+      ],
+      "base_prob": 0.68
+    },
+    {
+      "id": "PD.2.1",
+      "label": "Threat Modeling",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "planning",
+        "security"
+      ],
+      "base_prob": 0.62
+    },
+    {
+      "id": "PD.2.2",
+      "label": "API & System Design",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "planning"
+      ],
+      "base_prob": 0.7
+    },
+    {
+      "id": "CB.1",
+      "label": "Repo Setup & Standards",
+      "level": 1,
+      "node_type": "leaf",
+      "tags": [
+        "coding"
+      ],
+      "base_prob": 0.78
+    },
+    {
+      "id": "CB.2",
+      "label": "Implementation",
+      "level": 1,
+      "node_type": "composite",
+      "tags": [
+        "coding"
+      ]
+    },
+    {
+      "id": "CB.3",
+      "label": "Build & CI",
+      "level": 1,
+      "node_type": "composite",
+      "tags": [
+        "coding",
+        "deploy"
+      ]
+    },
+    {
+      "id": "CB.2.1",
+      "label": "Code Generation & Autocomplete",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "coding"
+      ],
+      "base_prob": 0.7
+    },
+    {
+      "id": "CB.2.2",
+      "label": "Code Review Assistance",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "coding"
+      ],
+      "base_prob": 0.66
+    },
+    {
+      "id": "CB.3.1",
+      "label": "CI Pipeline Configuration",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "deploy",
+        "coding"
+      ],
+      "base_prob": 0.74
+    },
+    {
+      "id": "CB.3.2",
+      "label": "Dependency & Vulnerability Management",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "security",
+        "coding"
+      ],
+      "base_prob": 0.68
+    },
+    {
+      "id": "TI.1",
+      "label": "Unit Testing",
+      "level": 1,
+      "node_type": "composite",
+      "tags": [
+        "testing"
+      ]
+    },
+    {
+      "id": "TI.2",
+      "label": "Integration & E2E Testing",
+      "level": 1,
+      "node_type": "leaf",
+      "tags": [
+        "testing"
+      ],
+      "base_prob": 0.7
+    },
+    {
+      "id": "TI.3",
+      "label": "QA, Review & Fix",
+      "level": 1,
+      "node_type": "composite",
+      "tags": [
+        "testing",
+        "security"
+      ]
+    },
+    {
+      "id": "TI.1.1",
+      "label": "Unit Test Generation",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "testing"
+      ],
+      "base_prob": 0.65
+    },
+    {
+      "id": "TI.1.2",
+      "label": "Coverage Improvement",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "testing"
+      ],
+      "base_prob": 0.6
+    },
+    {
+      "id": "TI.3.1",
+      "label": "Issue Detection & Triage",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "testing",
+        "security"
+      ],
+      "base_prob": 0.68
+    },
+    {
+      "id": "TI.3.2",
+      "label": "Test Reporting & Insights",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "testing"
+      ],
+      "base_prob": 0.72
+    },
+    {
+      "id": "DE.1",
+      "label": "Packaging & Artifacts",
+      "level": 1,
+      "node_type": "leaf",
+      "tags": [
+        "deploy"
+      ],
+      "base_prob": 0.72
+    },
+    {
+      "id": "DE.2",
+      "label": "Release Management",
+      "level": 1,
+      "node_type": "composite",
+      "tags": [
+        "deploy",
+        "planning"
+      ]
+    },
+    {
+      "id": "DE.3",
+      "label": "Deployment Automation",
+      "level": 1,
+      "node_type": "leaf",
+      "tags": [
+        "deploy"
+      ],
+      "base_prob": 0.7
+    },
+    {
+      "id": "DE.2.1",
+      "label": "Release Notes & Change Summary",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "deploy",
+        "planning"
+      ],
+      "base_prob": 0.75
+    },
+    {
+      "id": "DE.2.2",
+      "label": "Approval Gates & Rollback Readiness",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "deploy",
+        "security"
+      ],
+      "base_prob": 0.66
+    },
+    {
+      "id": "MO.1",
+      "label": "Observability",
+      "level": 1,
+      "node_type": "composite",
+      "tags": [
+        "monitoring"
+      ]
+    },
+    {
+      "id": "MO.2",
+      "label": "Incident Response",
+      "level": 1,
+      "node_type": "composite",
+      "tags": [
+        "monitoring"
+      ]
+    },
+    {
+      "id": "MO.3",
+      "label": "Continuous Improvement",
+      "level": 1,
+      "node_type": "leaf",
+      "tags": [
+        "monitoring",
+        "planning"
+      ],
+      "base_prob": 0.7
+    },
+    {
+      "id": "MO.1.1",
+      "label": "Alert Tuning",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "monitoring"
+      ],
+      "base_prob": 0.62
+    },
+    {
+      "id": "MO.1.2",
+      "label": "Log/Trace Querying & Insights",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "monitoring"
+      ],
+      "base_prob": 0.68
+    },
+    {
+      "id": "MO.2.1",
+      "label": "Incident Triage",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "monitoring"
+      ],
+      "base_prob": 0.64
+    },
+    {
+      "id": "MO.2.2",
+      "label": "Postmortem Drafting",
+      "level": 2,
+      "node_type": "leaf",
+      "tags": [
+        "monitoring",
+        "planning"
+      ],
+      "base_prob": 0.7
+    }
+  ],
+  "edges": [
+    {
+      "src": "PD",
+      "dst": "CB",
+      "edge_type": "sequence",
+      "params": {
+        "soft_gating_strength": 0.75
+      }
+    },
+    {
+      "src": "CB",
+      "dst": "TI",
+      "edge_type": "sequence",
+      "params": {
+        "soft_gating_strength": 0.8
+      }
+    },
+    {
+      "src": "TI",
+      "dst": "DE",
+      "edge_type": "sequence",
+      "params": {
+        "soft_gating_strength": 0.85
+      }
+    },
+    {
+      "src": "DE",
+      "dst": "MO",
+      "edge_type": "sequence",
+      "params": {
+        "soft_gating_strength": 0.9
+      }
+    },
+    {
+      "src": "PD.1.1",
+      "dst": "PD.1",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "PD.1.2",
+      "dst": "PD.1",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "PD.2.1",
+      "dst": "PD.2",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "PD.2.2",
+      "dst": "PD.2",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "CB.2.1",
+      "dst": "CB.2",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "CB.2.2",
+      "dst": "CB.2",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "CB.3.1",
+      "dst": "CB.3",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "CB.3.2",
+      "dst": "CB.3",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "TI.1.1",
+      "dst": "TI.1",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "TI.1.2",
+      "dst": "TI.1",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "TI.3.1",
+      "dst": "TI.3",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "TI.3.2",
+      "dst": "TI.3",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "DE.2.1",
+      "dst": "DE.2",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "DE.2.2",
+      "dst": "DE.2",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "MO.1.1",
+      "dst": "MO.1",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "MO.1.2",
+      "dst": "MO.1",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "MO.2.1",
+      "dst": "MO.2",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "MO.2.2",
+      "dst": "MO.2",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "PD.1",
+      "dst": "PD",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "PD.2",
+      "dst": "PD",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "PD.3",
+      "dst": "PD",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "CB.1",
+      "dst": "CB",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "CB.2",
+      "dst": "CB",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "CB.3",
+      "dst": "CB",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "TI.1",
+      "dst": "TI",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "TI.2",
+      "dst": "TI",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "TI.3",
+      "dst": "TI",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "DE.1",
+      "dst": "DE",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "DE.2",
+      "dst": "DE",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "DE.3",
+      "dst": "DE",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "MO.1",
+      "dst": "MO",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "MO.2",
+      "dst": "MO",
+      "edge_type": "decomposition"
+    },
+    {
+      "src": "MO.3",
+      "dst": "MO",
+      "edge_type": "decomposition"
+    }
+  ]
+}
+
+

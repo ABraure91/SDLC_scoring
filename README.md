@@ -2,6 +2,40 @@
 
 Application web (SPA) pour visualiser une matrice de scoring d’outils IA sur les différentes étapes d’un SDLC (heatmap + radar/spider chart).
 
+## Lunch command
+
+Terminal 1
+    cd backend
+    python -m venv .venv
+    # Linux/macOS
+    source .venv/bin/activate
+    # Windows PowerShell
+    # .\.venv\Scripts\Activate.ps1
+
+    pip install -r requirements.txt
+    uvicorn app.main:app --reload --port 8000
+
+Terminal 2
+    cd frontend
+    npm install
+    npm run dev
+
+En cas de problème, dans le terminal 2
+    cd frontend
+
+    # Nettoyage
+    rm -rf node_modules
+    rm -rf dist .vite
+
+    # Si vous avez package-lock.json (recommandé)
+    npm ci
+
+    # Sinon
+    # npm install
+
+    npm run dev
+
+
 ## Stack et justification (court)
 
 - **Backend**: **Python + FastAPI**
