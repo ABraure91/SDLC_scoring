@@ -80,17 +80,6 @@ export default function HeatmapView(props: {
   const [selectedStep, setSelectedStep] = useState<string | null>(null)
   const plotRef = useRef<HTMLDivElement>(null)
 
-  // Réinitialiser la sélection si l'étape sélectionnée n'est plus dans les filtres ou n'est plus de la branche sélectionnée
-  useEffect(() => {
-    if (selectedStep) {
-      const isInFilters = adjustedFilters.selectedSteps.includes(selectedStep)
-      const isInFilteredBranch = !selectedBranchId || stepToBranchMap.size === 0 || filteredStepNames.includes(selectedStep)
-      if (!isInFilters || !isInFilteredBranch) {
-        setSelectedStep(null)
-      }
-    }
-  }, [selectedStep, adjustedFilters.selectedSteps, selectedBranchId, filteredStepNames, stepToBranchMap])
-
   // Filtrer les filtres pour ne garder que les étapes de la branche sélectionnée
   const adjustedFilters = useMemo(() => {
     if (!selectedBranchId || stepToBranchMap.size === 0) {
@@ -105,6 +94,17 @@ export default function HeatmapView(props: {
       selectedSteps: filteredSelectedSteps.length > 0 ? filteredSelectedSteps : filteredStepNames
     }
   }, [filters, selectedBranchId, filteredStepNames, stepToBranchMap])
+
+  // Réinitialiser la sélection si l'étape sélectionnée n'est plus dans les filtres ou n'est plus de la branche sélectionnée
+  useEffect(() => {
+    if (selectedStep) {
+      const isInFilters = adjustedFilters.selectedSteps.includes(selectedStep)
+      const isInFilteredBranch = !selectedBranchId || stepToBranchMap.size === 0 || filteredStepNames.includes(selectedStep)
+      if (!isInFilters || !isInFilteredBranch) {
+        setSelectedStep(null)
+      }
+    }
+  }, [selectedStep, adjustedFilters.selectedSteps, selectedBranchId, filteredStepNames, stepToBranchMap])
 
   const filtered = buildFilteredMatrix({
     toolNames,

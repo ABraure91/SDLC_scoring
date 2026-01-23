@@ -38,7 +38,14 @@ export async function uploadCsv(file: File): Promise<UploadResponse> {
     throw await parseError(res)
   }
 
-  return (await res.json()) as UploadResponse
+  try {
+    return (await res.json()) as UploadResponse
+  } catch (e) {
+    throw new ApiError(
+      'Erreur lors de la lecture de la réponse du serveur. La réponse n\'est pas un JSON valide.',
+      { code: 'invalid_json_response', status: res.status }
+    )
+  }
 }
 
 export async function fetchSample(): Promise<UploadResponse> {
@@ -46,7 +53,14 @@ export async function fetchSample(): Promise<UploadResponse> {
   if (!res.ok) {
     throw await parseError(res)
   }
-  return (await res.json()) as UploadResponse
+  try {
+    return (await res.json()) as UploadResponse
+  } catch (e) {
+    throw new ApiError(
+      'Erreur lors de la lecture de la réponse du serveur. La réponse n\'est pas un JSON valide.',
+      { code: 'invalid_json_response', status: res.status }
+    )
+  }
 }
 
 export async function uploadGraph(file: File): Promise<GraphResponse> {
