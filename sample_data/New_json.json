@@ -1,0 +1,611 @@
+{
+    "nodes": [
+        {
+        "id": "plan_and_design",
+        "label": "Plan and Design",
+        "level": 0,
+        "node_type": "composite",
+        "parent_node": []
+        },
+        {
+        "id": "code_and_build",
+        "label": "Code and Build",
+        "level": 0,
+        "node_type": "composite",
+        "parent_node": []
+        },
+        {
+        "id": "test_and_integration",
+        "label": "Test and Integration",
+        "level": 0,
+        "node_type": "composite",
+        "parent_node": []
+        },
+        {
+        "id": "delivery_and_deployment",
+        "label": "Delivery and Deployment",
+        "level": 0,
+        "node_type": "composite",
+        "parent_node": []
+        },
+        {
+        "id": "operate_and_monitor",
+        "label": "Operate and Monitor",
+        "level": 0,
+        "node_type": "composite",
+        "parent_node": []
+        },
+        {
+        "id": "dev_architecture_pattern_discovery_and_design",
+        "label": "Architecture pattern Discovery and Design",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "plan_and_design"
+        ]
+        },
+        {
+        "id": "dev_api_integrations_design_api_db",
+        "label": "API & Integrations Design (API, DB...)",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "plan_and_design"
+        ]
+        },
+        {
+        "id": "dev_source_code_management",
+        "label": "Source code management",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "dev_dependency_management",
+        "label": "Dependency Management",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "dev_doc_generation",
+        "label": "Doc Generation",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "qa_requirements_provisioning",
+        "label": "Requirements Provisioning",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "plan_and_design"
+        ]
+        },
+        {
+        "id": "qa_requirements_analysis",
+        "label": "Requirements Analysis",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "plan_and_design"
+        ]
+        },
+        {
+        "id": "qa_test_analysis_design",
+        "label": "Test Analysis & Design",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "plan_and_design"
+        ]
+        },
+        {
+        "id": "qa_test_strategy_plan",
+        "label": "Test Strategy & Plan",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "plan_and_design"
+        ]
+        },
+        {
+        "id": "qa_code_review_bugs_smell",
+        "label": "Code Review (Bugs, Smell...)",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "qa_unit_testing",
+        "label": "Unit Testing",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "qa_code_formatting_linting",
+        "label": "Code Formatting & Linting",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "qa_test_implementation_automation",
+        "label": "Test Implementation/Automation",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "test_and_integration"
+        ]
+        },
+        {
+        "id": "qa_test_execution",
+        "label": "Test Execution",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "test_and_integration"
+        ]
+        },
+        {
+        "id": "qa_test_reporting",
+        "label": "Test Reporting",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "test_and_integration"
+        ]
+        },
+        {
+        "id": "qa_test_data_management",
+        "label": "Test Data Management",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "test_and_integration"
+        ]
+        },
+        {
+        "id": "qa_defect_management",
+        "label": "Defect Management",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "test_and_integration"
+        ]
+        },
+        {
+        "id": "qa_monitoring_and_control",
+        "label": "Monitoring and Control",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "test_and_integration"
+        ]
+        },
+        {
+        "id": "qa_test_environment_management",
+        "label": "Test Environment management",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "test_and_integration",
+        "delivery_and_deployment"
+        ]
+        },
+        {
+        "id": "qa_business_validation",
+        "label": "Business Validation",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "delivery_and_deployment"
+        ]
+        },
+        {
+        "id": "qa_test_sign_off",
+        "label": "Test Sign-off",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "delivery_and_deployment"
+        ]
+        },
+        {
+        "id": "qa_dr_testing",
+        "label": "DR Testing",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "delivery_and_deployment"
+        ]
+        },
+        {
+        "id": "devops_pipeline_mgmt",
+        "label": "Pipeline Mgmt",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "devops_continuous_integration",
+        "label": "Continuous Integration",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "devops_build_runners_agents",
+        "label": "Build Runners/Agents",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "devops_artifact_management",
+        "label": "Artifact Management",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "devops_api_discovery_and_integration",
+        "label": "API Discovery and Integration",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "test_and_integration"
+        ]
+        },
+        {
+        "id": "devops_golden_path_template_mgmt_platform_engineering",
+        "label": "Golden Path/Template Mgmt (Platform Engineering)",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build",
+        "test_and_integration"
+        ]
+        },
+        {
+        "id": "devops_internal_developer_platforms",
+        "label": "Internal Developer Platforms",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build",
+        "test_and_integration"
+        ]
+        },
+        {
+        "id": "devops_infrastructure_as_code",
+        "label": "Infrastructure as Code",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "delivery_and_deployment"
+        ]
+        },
+        {
+        "id": "devops_continuous_delivery",
+        "label": "Continuous Delivery",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "delivery_and_deployment"
+        ]
+        },
+        {
+        "id": "devops_roles_segregation",
+        "label": "Roles / Segregation",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "delivery_and_deployment",
+        "operate_and_monitor"
+        ]
+        },
+        {
+        "id": "sre_configuration_management",
+        "label": "Configuration Management",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "delivery_and_deployment"
+        ]
+        },
+        {
+        "id": "sre_release_runners_agents",
+        "label": "Release Runners / Agents",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "delivery_and_deployment"
+        ]
+        },
+        {
+        "id": "sre_security_checkers",
+        "label": "Security Checker(s)",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "delivery_and_deployment"
+        ]
+        },
+        {
+        "id": "sre_incident_prediction",
+        "label": "Incident prediction",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "operate_and_monitor"
+        ]
+        },
+        {
+        "id": "sre_incident_management",
+        "label": "Incident management",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "operate_and_monitor"
+        ]
+        },
+        {
+        "id": "sre_problem_management",
+        "label": "problem management",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "operate_and_monitor"
+        ]
+        },
+        {
+        "id": "sre_performance_monitoring",
+        "label": "Performance monitoring",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "operate_and_monitor"
+        ]
+        },
+        {
+        "id": "sre_application_monitoring",
+        "label": "Application monitoring",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "operate_and_monitor"
+        ]
+        },
+        {
+        "id": "sre_infrastructure_monitoring",
+        "label": "Infrastructure monitoring",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "operate_and_monitor"
+        ]
+        },
+        {
+        "id": "sre_monitoring_as_code",
+        "label": "Monitoring as Code",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "operate_and_monitor"
+        ]
+        },
+        {
+        "id": "security_knowledge_base",
+        "label": "Knowledge base",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "plan_and_design"
+        ]
+        },
+        {
+        "id": "security_security_training",
+        "label": "Security Training",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "plan_and_design"
+        ]
+        },
+        {
+        "id": "security_threat_modeling_platform",
+        "label": "Threat Modeling Platform",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "plan_and_design"
+        ]
+        },
+        {
+        "id": "security_secret_detection",
+        "label": "Secret Detection",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build",
+        "operate_and_monitor"
+        ]
+        },
+        {
+        "id": "security_sast",
+        "label": "SAST",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "security_sca",
+        "label": "SCA",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "security_dast",
+        "label": "DAST",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "test_and_integration"
+        ]
+        },
+        {
+        "id": "security_iast",
+        "label": "IAST",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "test_and_integration"
+        ]
+        },
+        {
+        "id": "security_iac_scan",
+        "label": "IaC Scan",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "delivery_and_deployment"
+        ]
+        },
+        {
+        "id": "security_secure_dependency_artifacts",
+        "label": "Secure Dependency & Artifacts",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "delivery_and_deployment"
+        ]
+        },
+        {
+        "id": "security_pen_testing",
+        "label": "Pen Testing",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "delivery_and_deployment"
+        ]
+        },
+        {
+        "id": "security_cwpp",
+        "label": "CWPP",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "operate_and_monitor"
+        ]
+        },
+        {
+        "id": "security_cspm",
+        "label": "CSPM",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "operate_and_monitor"
+        ]
+        },
+        {
+        "id": "security_rasp",
+        "label": "RASP",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "operate_and_monitor"
+        ]
+        },
+        {
+        "id": "lc_license_management",
+        "label": "License management",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "lc_sbom",
+        "label": "SBOM",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "s12y_ecodesign",
+        "label": "Ecodesign",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "plan_and_design"
+        ]
+        },
+        {
+        "id": "s12y_eco_development",
+        "label": "Eco-development",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "s12y_caching",
+        "label": "Caching",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "code_and_build"
+        ]
+        },
+        {
+        "id": "s12y_resource_management",
+        "label": "Resource management",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "delivery_and_deployment"
+        ]
+        },
+        {
+        "id": "s12y_carbon_emission",
+        "label": "Carbon emission",
+        "level": 1,
+        "node_type": "composite",
+        "parent_node": [
+        "operate_and_monitor"
+        ]
+        }
+    ]
+}
