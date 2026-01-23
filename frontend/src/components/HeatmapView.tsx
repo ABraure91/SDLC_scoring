@@ -1,10 +1,8 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import Plotly from 'plotly.js-dist-min'
 import Plot from 'react-plotly.js'
-import clsx from 'clsx'
 import type { FiltersState, SDLCGraph } from '../types'
-import type { LevelFilter } from '../utils/graphUtils'
-import { createStepLevelMap, filterStepsByLevel } from '../utils/graphUtils'
+import { createStepToBranchMap, filterStepsByBranch } from '../utils/graphUtils'
 
 function buildFilteredMatrix(args: {
   toolNames: string[]
@@ -67,36 +65,35 @@ export default function HeatmapView(props: {
   maxScore: number
   filters: FiltersState
   graph?: SDLCGraph | null
-  levelFilter: LevelFilter
-  onLevelFilterChange: (filter: LevelFilter) => void
+  selectedBranchId?: string | null
 }) {
-  const { toolNames, stepNames, matrix, minScore, maxScore, filters, graph, levelFilter, onLevelFilterChange } = props
+  const { toolNames, stepNames, matrix, minScore, maxScore, filters, graph, selectedBranchId } = props
 
-  // Créer le mapping des étapes vers les niveaux
-  const stepLevelMap = useMemo(() => createStepLevelMap(graph || null), [graph])
+  // Créer le mapping des étapes vers les branches
+  const stepToBranchMap = useMemo(() => createStepToBranchMap(graph || null), [graph])
 
-  // Filtrer les étapes selon le niveau sélectionné
+  // Filtrer les étapes selon la branche sélectionnée
   const filteredStepNames = useMemo(() => {
-    return filterStepsByLevel(stepNames, levelFilter, stepLevelMap)
-  }, [stepNames, levelFilter, stepLevelMap])
+    return filterStepsByBranch(stepNames, selectedBranchId || null, stepToBranchMap)
+  }, [stepNames, selectedBranchId, stepToBranchMap])
 
   const [selectedStep, setSelectedStep] = useState<string | null>(null)
   const plotRef = useRef<HTMLDivElement>(null)
 
-  // Réinitialiser la sélection si l'étape sélectionnée n'est plus dans les filtres ou n'est plus du niveau sélectionné
+  // Réinitialiser la sélection si l'étape sélectionnée n'est plus dans les filtres ou n'est plus de la branche sélectionnée
   useEffect(() => {
     if (selectedStep) {
-      const isInFilters = filters.selectedSteps.includes(selectedStep)
-      const isInFilteredLevel = levelFilter === 'all' || stepLevelMap.size === 0 || filteredStepNames.includes(selectedStep)
-      if (!isInFilters || !isInFilteredLevel) {
+      const isInFilters = adjustedFilters.selectedSteps.includes(selectedStep)
+      const isInFilteredBranch = !selectedBranchId || stepToBranchMap.size === 0 || filteredStepNames.includes(selectedStep)
+      if (!isInFilters || !isInFilteredBranch) {
         setSelectedStep(null)
       }
     }
-  }, [selectedStep, filters.selectedSteps, levelFilter, filteredStepNames, stepLevelMap])
+  }, [selectedStep, adjustedFilters.selectedSteps, selectedBranchId, filteredStepNames, stepToBranchMap])
 
-  // Filtrer les filtres pour ne garder que les étapes du niveau sélectionné
+  // Filtrer les filtres pour ne garder que les étapes de la branche sélectionnée
   const adjustedFilters = useMemo(() => {
-    if (levelFilter === 'all' || stepLevelMap.size === 0) {
+    if (!selectedBranchId || stepToBranchMap.size === 0) {
       return filters
     }
     // Ne garder que les étapes qui sont dans filteredStepNames ET dans filters.selectedSteps
@@ -107,13 +104,13 @@ export default function HeatmapView(props: {
       ...filters,
       selectedSteps: filteredSelectedSteps.length > 0 ? filteredSelectedSteps : filteredStepNames
     }
-  }, [filters, levelFilter, filteredStepNames, stepLevelMap])
+  }, [filters, selectedBranchId, filteredStepNames, stepToBranchMap])
 
   const filtered = buildFilteredMatrix({
     toolNames,
     stepNames, // Garder les stepNames originaux pour l'indexation de la matrice
     matrix,
-    filters: adjustedFilters, // Utiliser adjustedFilters qui filtre par niveau
+    filters: adjustedFilters, // Utiliser adjustedFilters qui filtre par branche
     selectedStep
   })
 
@@ -256,69 +253,11 @@ export default function HeatmapView(props: {
     ? `Outils triés par ordre croissant pour "${selectedStep}". Cliquez à nouveau pour annuler.`
     : 'Cliquez sur une étape (axe x) pour trier les outils par ordre croissant.'
 
-  // Afficher les boutons de filtrage seulement si un graph est chargé
-  const showLevelFilter = Boolean(graph)
-
   return (
     <div className="rounded-xl border border-axa-border bg-axa-card p-5 shadow-soft">
-      <div className="flex flex-col gap-3 md:flex-row md:items-baseline md:justify-between">
-        <div className="flex items-baseline justify-between gap-3">
-          <div className="text-base font-semibold">Heatmap de scoring</div>
-          <div className="text-xs text-axa-muted">{helpText}</div>
-        </div>
-
-        {showLevelFilter && (
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => onLevelFilterChange('all')}
-              className={clsx(
-                'rounded-md px-3 py-1.5 text-sm font-medium transition',
-                levelFilter === 'all'
-                  ? 'bg-axa-blue text-white'
-                  : 'bg-axa-surface text-axa-ink hover:bg-axa-lightblue/50'
-              )}
-            >
-              Tous
-            </button>
-            <button
-              type="button"
-              onClick={() => onLevelFilterChange(0)}
-              className={clsx(
-                'rounded-md px-3 py-1.5 text-sm font-medium transition',
-                levelFilter === 0
-                  ? 'bg-axa-blue text-white'
-                  : 'bg-axa-surface text-axa-ink hover:bg-axa-lightblue/50'
-              )}
-            >
-              Lv 0
-            </button>
-            <button
-              type="button"
-              onClick={() => onLevelFilterChange(1)}
-              className={clsx(
-                'rounded-md px-3 py-1.5 text-sm font-medium transition',
-                levelFilter === 1
-                  ? 'bg-axa-blue text-white'
-                  : 'bg-axa-surface text-axa-ink hover:bg-axa-lightblue/50'
-              )}
-            >
-              Lv 1
-            </button>
-            <button
-              type="button"
-              onClick={() => onLevelFilterChange(2)}
-              className={clsx(
-                'rounded-md px-3 py-1.5 text-sm font-medium transition',
-                levelFilter === 2
-                  ? 'bg-axa-blue text-white'
-                  : 'bg-axa-surface text-axa-ink hover:bg-axa-lightblue/50'
-              )}
-            >
-              Lv 2
-            </button>
-          </div>
-        )}
+      <div className="flex items-baseline justify-between gap-3">
+        <div className="text-base font-semibold">Heatmap de scoring</div>
+        <div className="text-xs text-axa-muted">{helpText}</div>
       </div>
 
       <div className="mt-4 h-[520px]" ref={plotRef}>
